@@ -8,7 +8,7 @@ server {
 
     server_name "";
 
-    try_files $uri/index.html $uri.html $uri @app;
+    try_files $uri/index.html $uri.html $uri ;
 
 
 }
