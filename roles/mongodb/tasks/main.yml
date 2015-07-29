@@ -1,20 +1,18 @@
 ---
-- name: Add mongodb key
-  sudo: yes
-  apt_key: url=http://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x7F0CEB10 state=present
+- name: Adding APT key
+  apt_key:
+    id: 7F0CEB10
+    url: http://docs.mongodb.org/10gen-gpg-key.asc
 
-- name: Add mongodb repo
-  sudo: true
-  apt_repository: repo='deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' state=present
+- name: Add APT repository
+  apt_repository:
+    repo: "deb http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/3.0 multiverse"
+    update_cache: yes
 
-- name: Update apt
-  sudo: yes
-  apt: upgrade=yes
-
-- name: Install mongodb
-  sudo: true
-  apt: pkg=mongodb-10gen state=latest
-
+- name: Installing package
+  apt:
+    pkg: "{{ mongodb_package }}"
+    state: present
 - name: Start mongodb server
   service: name=mongodb state=started
 
@@ -22,5 +20,28 @@
   sudo: true
   pip: name=pymongo
 
-- name: Add users
-  mongodb_user: database={{ mongodb_db }} name={{ mongodb_user }} password={{ mongodb_pass }} state=present
+
+- name: Configuring database directory
+  file:
+    state: directory
+    path: "{{ mongodb_conf_dbpath }}"
+    owner: "{{ mongodb_user }}"
+    group: "{{ mongodb_user }}"
+    mode: "0755"
+
+- name: Configuring log
+  file:
+    state: file
+    path: "{{ mongodb_conf_logpath }}"
+    owner: "{{ mongodb_user }}"
+    group: "{{ mongodb_user }}"
+    mode: "0644"
+
+- name: Configuring mongodb
+  template:
+    src: etc-mongod.conf.j2
+    dest: /etc/mongod.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart mongodb
