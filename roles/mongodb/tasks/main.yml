@@ -13,8 +13,7 @@
   apt:
     pkg: "{{ mongodb_package }}"
     state: present
-- name: Start mongodb server
-  service: name=mongodb state=started
+
 
 - name: Install pymongo to use with ansible
   sudo: true
