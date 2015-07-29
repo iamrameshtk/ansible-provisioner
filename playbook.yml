@@ -1,6 +1,6 @@
 ---
 
-# Example playbook for your project. Maybe call it vagrant.yml
+# Example playbook for your project. 
 #
 # Update the roles_path to be relative from your project,
 # e.g. roles_path: "../ansible-provisioner/roles"
@@ -8,9 +8,7 @@
 - hosts: all
   vars:
     env: development
-    app_root: '/vagrant'
-    app_user: vagrant
-    app_public: "{{app_root}}/public"
+    app_public: "/var/www"
     roles_path: 'roles'
 
   roles:
