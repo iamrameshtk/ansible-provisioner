@@ -38,7 +38,7 @@
 
 - name: Configuring mongodb
   template:
-    src: etc-mongod.conf.j2
+    src: mongo.conf.j2
     dest: /etc/mongod.conf
     owner: root
     group: root
