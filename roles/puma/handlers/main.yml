@@ -1,4 +1,0 @@
----
-- name: puma restart
-  sudo: true
-  service: name=puma state=restarted
