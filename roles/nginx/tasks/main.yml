@@ -11,6 +11,13 @@
   sudo: true
   template: src=default.tpl dest=/etc/nginx/sites-enabled/default
 
+- name: Create /var/www dir
+  file: path=/var/www state=directory mode=0755
+
+- name: Create hello world page
+  sudo: true
+  template: src=index.tpl dest=/var/www/index.html
+
 - name: reload nginx
   sudo: true
   service: name=nginx enabled=yes state=reloaded
