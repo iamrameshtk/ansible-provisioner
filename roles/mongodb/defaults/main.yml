@@ -2,4 +2,4 @@
 mongodb_user: "mongouser"
 mongodb_db: "app_db"
 mongodb_port: "27017"
-mongodb_pass: "password"
+mongodb_pass: "th3_p@ssword"

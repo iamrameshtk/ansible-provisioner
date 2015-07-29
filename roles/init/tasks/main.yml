@@ -16,3 +16,5 @@
     - libcurl4-openssl-dev
     - build-essential
     - git
+    - vim
+    - nmap
